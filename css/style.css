@@ -1,0 +1,374 @@
+/* ============================================
+   Moccam - Styles personnalisés
+   ============================================ */
+
+/* Reset et variables */
+:root {
+    --header-height: 60px;
+    --sidebar-width: 260px;
+    --footer-height: 50px;
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --light-color: #ecf0f1;
+    --dark-color: #2c3e50;
+    --text-color: #333;
+    --text-light: #7f8c8d;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+/* ============================================
+   Header (Bandeau)
+   ============================================ */
+.header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1a252f 100%);
+    color: white;
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.header-content {
+    height: 100%;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.logo i {
+    font-size: 1.8rem;
+}
+
+.app-name {
+    letter-spacing: 1px;
+}
+
+.search-container {
+    max-width: 500px;
+}
+
+#quick-search {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-radius: var(--border-radius);
+}
+
+#quick-search::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#quick-search:focus {
+    background: rgba(255, 255, 255, 0.25);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+}
+
+.header-actions {
+    z-index: 1001;
+}
+
+#hamburger-menu,
+#login-btn {
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+#hamburger-menu:hover,
+#login-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+}
+
+/* ============================================
+   Sidebar (Barre latérale)
+   ============================================ */
+.sidebar {
+    width: var(--sidebar-width);
+    background: white;
+    height: calc(100vh - var(--header-height) - var(--footer-height));
+    position: sticky;
+    top: var(--header-height);
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    z-index: 900;
+}
+
+.sidebar-nav {
+    padding: 1.5rem 0;
+}
+
+.sidebar-nav .nav-link {
+    color: var(--text-color);
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    transition: var(--transition);
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav .nav-link:hover {
+    background: var(--light-color);
+    color: var(--primary-color);
+}
+
+.sidebar-nav .nav-link.active {
+    background: var(--light-color);
+    color: var(--secondary-color);
+    border-left-color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.sidebar-nav .nav-link i {
+    font-size: 1.1rem;
+    min-width: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: var(--text-light);
+    padding: 0.5rem;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    color: var(--text-color);
+    background: var(--light-color);
+    border-radius: var(--border-radius);
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+.main-container {
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+.content {
+    background: #f8f9fa;
+    overflow-y: auto;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+    background: var(--dark-color);
+    color: rgba(255, 255, 255, 0.7);
+    height: var(--footer-height);
+    padding: 0 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.card {
+    border: none;
+    box-shadow: var(--shadow);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+/* ============================================
+   Table
+   ============================================ */
+.table {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.table th {
+    background: var(--light-color);
+    font-weight: 600;
+    color: var(--text-color);
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-hover tbody tr:hover {
+    background: rgba(52, 152, 219, 0.05);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn-outline-secondary,
+.btn-outline-primary,
+.btn-outline-danger {
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-primary:hover,
+.btn-outline-danger:hover {
+    transform: translateY(-1px);
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+}
+
+/* ============================================
+   Responsive - Mobile
+   ============================================ */
+@media (max-width: 992px) {
+    /* Sidebar masquée par défaut sur mobile */
+    .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: -var(--sidebar-width);
+        width: var(--sidebar-width);
+        height: calc(100vh - var(--header-height));
+        transition: var(--transition);
+        z-index: 1000;
+    }
+
+    /* Afficher la sidebar quand elle a la classe 'open' */
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Overlay pour fermer la sidebar en cliquant à l'extérieur */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* Ajuster le contenu principal */
+    .content {
+        width: 100%;
+    }
+
+    /* Champ de recherche : prend moins de place sur mobile */
+    .search-container {
+        max-width: 200px;
+        margin: 0 1rem !important;
+    }
+
+    /* Cacher le texte des liens de la sidebar sur mobile si besoin */
+    .sidebar-nav .nav-link span {
+        display: inline;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        max-width: 150px;
+    }
+    
+    .logo span {
+        display: none;
+    }
+    
+    .logo i {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .search-container {
+        max-width: 100px;
+    }
+    
+    .header-content {
+        padding: 0 0.5rem;
+    }
+    
+    .sidebar-nav .nav-link span {
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to { 
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.sidebar.open {
+    animation: slideIn 0.3s ease-out;
+}
+
+.sidebar-overlay.active {
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* ============================================
+   Scrollbar personnalisée pour la sidebar
+   ============================================ */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* ============================================
+   Focus pour l'accessibilité
+   ============================================ */
+:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 2px;
+}
+
+/* Supprimer le focus pour les boutons de la sidebar */
+.sidebar-nav .nav-link:focus {
+    outline: none;
+}
