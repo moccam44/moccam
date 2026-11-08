@@ -269,7 +269,7 @@ TEXT;
                 $this->tableau_encode[$a]=$b;
             }
             if ($sens_unique == "" OR $sens_unique == "ba") {
-                $this->tableau_encode[$b]=$a;
+                $this->tableau_decode[$b]=$a;
             }
         }
         print_r($this->tableau_decode);
