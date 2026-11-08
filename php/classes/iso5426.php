@@ -266,10 +266,10 @@ TEXT;
             $a=$this->hex2chr($a);
             $b=$this->hex2chr($b);
             if ($sens_unique == "" OR $sens_unique == "ab") {
-                array_push($this->tableau_encode, array($a=>$b));
+                $this->tableau_encode[$a]=$b;
             }
             if ($sens_unique == "" OR $sens_unique == "ba") {
-                array_push($this->tableau_decode, array($b=>$a));
+                $this->tableau_encode[$b]=$a;
             }
         }
         print_r($this->tableau_decode);
