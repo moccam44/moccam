@@ -155,7 +155,7 @@ class marc {
         } elseif ($this->encodage == "iso5426") {
             $retour=$iso5426->decode($chaine, true);
         } else { //
-            $retour=utf8_encode($chaine);
+            $retour=mb_convert_encoding($chaine, 'ISO-8859-1', 'UTF-8');
         }
         return ($retour);
     }
