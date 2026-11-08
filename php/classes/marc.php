@@ -122,6 +122,12 @@ class marc {
         
     }
     
+    function setup_file ($chemin_fichier) {
+        $this->open_file($chemin_fichier);
+        $this->repertoire_notices=$this->genere_rep_notices();
+        
+    }
+    
     
     
 } // fin de la classe
