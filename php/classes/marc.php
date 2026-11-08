@@ -74,6 +74,9 @@ class marc {
     
     function open_file ($chemin_fichier) {
         $this->file=fopen($chemin_fichier, "rb");
+        if ($this->file === false) {
+            throw new Exception("impossible d'ouvrir $chemin_fichier");
+        }
     }
     
     /**
@@ -95,6 +98,9 @@ class marc {
                 $pos_last=$idx+1;
             }
             $idx++;
+        }
+        if (count ($rep)==0) {
+            throw new Exception("aucune notice trouvée dans le fichier");
         }
         return ($rep);
     }
