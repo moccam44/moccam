@@ -292,7 +292,7 @@ TEXT;
     function decode ($chaine, $bool_encode_utf8=false) {
         $retour=strtr($chaine, $this->tableau_decode);
         if ($bool_encode_utf8 === true) {
-            $retour= mb_convert_encoding($retour, 'ISO-8859-1', 'UTF-8');
+            $retour= mb_convert_encoding($retour, 'UTF-8', 'ISO-8859-1');
         }
         return ($retour);
     }
