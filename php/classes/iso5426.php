@@ -259,7 +259,7 @@ TEXT;
     
     function init() {
         $tmp=json_decode($this->correspondances, true);
-        foreach ($tmp as $bidon => $info) {
+        foreach ($tmp as $bidon => $infos) {
             $a=$infos["a"];
             $b=$infos["b"];
             $sens_unique=$infos["sens_unique"];
