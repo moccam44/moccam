@@ -9,6 +9,15 @@ class marc {
     var $separateur_champs=""; // séparateur des champs dans une notice 
     var $repertoire_notices; // le répertoire des notices contenues dans un fichier avec pour chacune la pos du 1er et du dernier caractère
     var $file; // pointeur vers le fichier de notices
+    var $encodage;
+    
+    function __construct($parametres) {
+        if ($parametres["encodage"] != "") {
+            $this->encodage=$parametres["encodage"];
+        }
+        
+        
+    }    
     
     /**
      * notice_marc_2_json
@@ -19,6 +28,7 @@ class marc {
      */
     function notice_marc_2_array ($parametres) {
         $notice=$parametres["notice"];
+        
         $notice_array=array();
         $notice_array["champs"]=array();
         $adresse_1e_car=substr($notice,12,5);
@@ -40,7 +50,7 @@ class marc {
                 for ($j=1;$j<=$nbre_ss_champs-1;$j++) {    ////////////////   POUR CHAQUE SOUS CHAMP...
                     $str_ss_champ=substr($sous_champs[$j], 1, strlen($sous_champs[$j])-1);
                     $code_ss_champ=substr($sous_champs[$j], 0, 1);
-                    array_push($champ["sous_champs"], array("code"=>$code_ss_champ, "valeur"=>$str_ss_champ));
+                    array_push($champ["sous_champs"], array("code"=>$code_ss_champ, "valeur"=>$this->traite_encodage($str_ss_champ)));
                 }
             } else { // un seul élément
                 $champ["valeur"]=$sous_champs[0];
@@ -122,10 +132,32 @@ class marc {
         
     }
     
+    /**
+     * setup_file
+     * fait une seule fois pour ouvrir le fichier et générer le répertoire des notices
+     * @param string ichemin_fichier 
+     */
     function setup_file ($chemin_fichier) {
         $this->open_file($chemin_fichier);
         $this->repertoire_notices=$this->genere_rep_notices();
-        
+    }
+    
+    /**
+     * traite_encodage
+     * pour l'import uniquement : décode iso5426 et encode utf8 sinécessaire
+     * @param chaine 
+     */
+    function traite_encodage ($chaine) {
+        global $iso5426; // outil global
+        $retour="";
+        if ($this->encodage == "utf8") {
+            return ($chaine); // on ne modifie rien
+        } elseif ($this->encodage == "iso5426") {
+            $retour=$iso5426->decode($chaine, true);
+        } else { //
+            $retour=utf8_encode($chaine);
+        }
+        return ($retour);
     }
     
     

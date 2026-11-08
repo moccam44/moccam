@@ -1,9 +1,14 @@
 <?php
 include_once ("php/classes/marc.php");
+include_once ("php/classes/iso5426.php");
 
 print ("debut <br> \n");
+// initialisation de iso5426
+$iso5426=new iso5426();
+$iso5426->init();
+
 try {
-    $marc=new marc();
+    $marc=new marc(array("encodage"=>"iso5426"));
     print ("ouverture de /var/marc/panier.pan <br>\n");
     $marc->setup_file("/var/marc/panier.pan");
     print ("répertoire <br>\n");
