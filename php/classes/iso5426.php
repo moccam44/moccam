@@ -284,7 +284,7 @@ TEXT;
     }
     
     function encode ($chaine) {
-        $retour=strstr($chaine, $this->tableau_encode);
+        $retour=strtr($chaine, $this->tableau_encode);
         return ($retour);
     }
     
