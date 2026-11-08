@@ -289,7 +289,7 @@ TEXT;
     }
     
     function decode ($chaine, $bool_encode_utf8=false) {
-        $retour=strstr($chaine, $this->tableau_decode);
+        $retour=strtr($chaine, $this->tableau_decode);
         if ($bool_encode_utf8 === true) {
             $retour= utf8_encode($retour);
         }
