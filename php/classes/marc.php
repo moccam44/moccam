@@ -148,6 +148,7 @@ class marc {
      * @param chaine 
      */
     function traite_encodage ($chaine) {
+       return($chaine);
         global $iso5426; // outil global
         $retour="";
         if ($this->encodage == "utf8") {
