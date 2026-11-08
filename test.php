@@ -1,5 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+//header('Content-type: text/html; charset=UTF-8');
+header('Content-type: text/html; charset=iso-8859-1');
 
 include_once ("php/classes/marc.php");
 include_once ("php/classes/iso5426.php");
