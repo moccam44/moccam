@@ -272,6 +272,7 @@ TEXT;
                 array_push($this->tableau_decode, array($b=>$a));
             }
         }
+        print_r($this->tableau_decode);
     }
     
     function hex2chr($chaine) {

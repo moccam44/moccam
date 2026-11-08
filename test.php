@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 include_once ("php/classes/marc.php");
 include_once ("php/classes/iso5426.php");
 
