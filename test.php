@@ -7,8 +7,8 @@ try {
     print ("ouverture de /var/marc/panier.pan <br>\n");
     $marc->open_file("/var/marc/panier.pan");
     print ("génération du répertoire <br>\n");
-    $marc->genere_rep_notices();
-    print_r($marc->repertoire_notices);
+    $toto=$marc->genere_rep_notices();
+    print_r($toto);
 } catch (Exception $e) {
     print($e->getMessage());
 }
