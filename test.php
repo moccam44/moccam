@@ -32,7 +32,12 @@ try {
     print_r($notice_array);
     $notice=new notice_marc($notice_array);
     
-    print ("\n<br>titre : ".$notice->get("200", "a"));
+    //print ("\n<br>titre : ".$notice->get("200", "a"));
+    $champ_200=$notice->get_champ("200");
+    print_r($champ_200);
+    
+    $champ_200=$notice->get_champ(array("200"));
+    print_r($champ_200);
     
     
 } catch (Exception $e) {
