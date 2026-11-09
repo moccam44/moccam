@@ -33,11 +33,13 @@ try {
     $notice=new notice_marc($notice_array);
     
     //print ("\n<br>titre : ".$notice->get("200", "a"));
-    $champ_200=$notice->get_champ("200");
+    $champ_200=$notice->get_champ(200);
     print_r($champ_200);
     
-    $champ_200=$notice->get_champ(array("200"));
-    print_r($champ_200);
+    $titre=$notice->get_ss_champ($champ_200, "a");
+    print_r($titre);
+    
+
     
     
 } catch (Exception $e) {
