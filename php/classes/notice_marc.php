@@ -54,11 +54,10 @@ class notice_marc {
             foreach ($champ["sous_champs"] as $sous_champ) {
                 $code=$sous_champ["code"];
                 $valeur=$sous_champ["valeur"];
-              print ("$code - $valeur <br>\n");
                 if (in_array($code, $codes)) {
                     array_push($retour, $valeur);
                     if ($bool_first_only === true) {
-                        //return ($retour);
+                        return ($retour);
                     }
                 }
             }
