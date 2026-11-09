@@ -5,6 +5,7 @@ header('Content-type: text/html; charset=UTF-8');
 
 include_once ("php/classes/marc.php");
 include_once ("php/classes/iso5426.php");
+include_once ("php/classes/notice_marc.php");
 
 print ("debut <br> \n");
 // initialisation de iso5426
@@ -17,12 +18,23 @@ try {
     $marc->setup_file("/var/marc/panier.pan");
     print ("répertoire <br>\n");
     print_r($marc->repertoire_notices);
+    /**
     foreach ($marc->repertoire_notices as $idx => $infos) {
         $chaine=$marc->get_notice_from_file($idx);
         $tableau=$marc->notice_marc_2_array(array("notice"=>$chaine));
         print ("<br> <b> NOTICE $idx </b></br> \n");
         print_r($tableau);
     }
+     * 
+     */
+    $notice_str=$marc->get_notice_from_file(0);
+    $notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
+    print_r($notice_array);
+    $notice=new notice_marc($notice_array);
+    
+    print ("\n<br>titre : ".$notice->get("200", "a"));
+    
+    
 } catch (Exception $e) {
     print($e->getMessage());
 }
