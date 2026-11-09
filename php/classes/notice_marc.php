@@ -67,7 +67,7 @@ class notice_marc {
     }
     
     function get_ss_champ ($champs, $codes) {
-        $valeurs=$this->get_champs($champs, $codes, true);
+        $valeurs=$this->get_ss_champs($champs, $codes, true);
         if (count($valeurs) > 0) {
             return ($valeurs[0]);
         } else {
