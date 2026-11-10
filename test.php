@@ -6,6 +6,7 @@ header('Content-type: text/html; charset=UTF-8');
 include_once ("php/classes/marc.php");
 include_once ("php/classes/iso5426.php");
 include_once ("php/classes/notice_marc.php");
+include_once ("php/classes/notice.php");
 
 print ("debut <br> \n");
 // initialisation de iso5426
@@ -16,8 +17,7 @@ try {
     $marc=new marc(array("encodage"=>"iso5426"));
     print ("ouverture de /var/marc/panier.pan <br>\n");
     $marc->setup_file("/var/marc/panier.pan");
-    print ("répertoire <br>\n");
-    print_r($marc->repertoire_notices);
+
     /**
     foreach ($marc->repertoire_notices as $idx => $infos) {
         $chaine=$marc->get_notice_from_file($idx);
@@ -30,14 +30,16 @@ try {
     $notice_str=$marc->get_notice_from_file(0);
     $notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
     print_r($notice_array);
-    $notice=new notice_marc($notice_array);
+    //$notice=new notice_marc($notice_array);
     
     //print ("\n<br>titre : ".$notice->get("200", "a"));
-    $champ_200=$notice->get_champ(200);
-    print_r($champ_200);
+    //$champ_200=$notice->get_champ(200);
+    //print_r($champ_200);
     
-    $titre=$notice->get_ss_champ($champ_200, "a");
-    print_r($titre);
+    //$titre=$notice->get_ss_champ($champ_200, "a");
+    //print_r($titre);
+    $notice=new notice($notice_array);
+    $notice->get_infos();
     
 
     
