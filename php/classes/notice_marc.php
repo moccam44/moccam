@@ -80,6 +80,16 @@ class notice_marc {
         return ($val);
     }
     
+    // nettoie les listes. Enlève les éléments vides
+    function nettoie_liste ($liste) {
+        $retour=array();
+        foreach ($liste as $elem) {
+            if ($elem !== "") {
+                array_push ($retour, $elem);
+            }
+        }
+    }
+    
     
     
     
