@@ -27,7 +27,7 @@ class notice extends notice_marc {
         print_r($ss_champs_200);
         $champs_400=$this->get_champs(array("430", "431", "432", "433", "434", "435", "436", "437", "440", "441", "442", "443", "444", "445", "446", "447", "448", "453", "454", "461", "462", "463", "464"));
         print_r($champs_400);
-        $ss_champs_400=$this->get_ss_champ($champs_400, "t");
+        $ss_champs_400=$this->get_ss_champs($champs_400, "t");
         print_r($ss_champs_400);
         $retour=array_merge ($ss_champs_200, $ss_champs_400);
         return ($this->nettoie_liste($retour));
