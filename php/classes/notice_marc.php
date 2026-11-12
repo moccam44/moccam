@@ -40,15 +40,19 @@ class notice_marc {
     /**
      * get_ss_champs
      * retourne un tableau de sous-champs
-     * @param array champs : tableau de champs dans lesquels chercher les sous-champs
+     * @param array champs : tableau de champs dans lesquels chercher les sous-champs OU bien 1 seul champ
      * @param array|string $codes : code ou tableau de codes
-     * @return array liste des valeurs ss-champs trouvés  
+     * @return array liste de strings des valeurs ss-champs trouvés  
      * 
      */
     function get_ss_champs ($champs, $codes, $bool_first_only=false) {
         $retour=array();
         if (!is_array($codes)) {
             $codes=array($codes);
+        }
+        // si 1 seul champ fourni, on crée une liste de 1 champ
+        if (isset($champs["tag"])) {
+            $champs=array($champs);
         }
         foreach ($champs as $champ) {
             foreach ($champ["sous_champs"] as $sous_champ) {
@@ -65,6 +69,14 @@ class notice_marc {
         return ($retour);
     }
     
+    /**
+     * get_ss_champ
+     * retourne le premier sous-champ correspondant sous formed e string
+     * @param array champs : tableau de champs dans lesquels chercher les sous-champs OU bien 1 seul champ
+     * @param array|string $codes : code ou tableau de codes
+     * @return string : 1er sous champ correspondant sous forme de string (ou "") 
+     * 
+     */
     function get_ss_champ ($champs, $codes) {
         $valeurs=$this->get_ss_champs($champs, $codes, true);
         if (count($valeurs) > 0) {
@@ -88,6 +100,23 @@ class notice_marc {
                 array_push ($retour, $elem);
             }
         }
+    }
+    
+    function formate_chaine ($chaine, $avant, $avant_verif, $apres, $concat="") {
+        if ($chaine === "") {
+            return ($chaine);
+        }
+        
+        $chaine=$avant.$chaine.$apres;
+        
+        if ($concat !== "" AND $avant_verif !== "") {
+            $chaine=$avant_verif.$chaine;
+        } 
+        
+        
+        
+        return ($chaine);
+        
     }
     
     
