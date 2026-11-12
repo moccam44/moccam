@@ -50,7 +50,7 @@ class notice extends notice_marc {
                 $ss_champ_f=$this->get_ss_champ($champ_700, "f");
                 $ss_champ_4=$this->get_ss_champ($champ_700, "4");
                 $fonction=get_intitule_liste_by_code("fonction_auteur", $ss_champ_4);
-                $vedette=vedette.$this->formate_chaine($ss_champ_f, " (", "", ")").$this->formate_chaine($ss_champ_4, " (", "", ")");
+                $vedette=$vedette.$this->formate_chaine($ss_champ_f, " (", "", ")").$this->formate_chaine($ss_champ_4, " (", "", ")");
             } 
             array_push($retour, $vedette);
         }
