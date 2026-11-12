@@ -100,6 +100,7 @@ class notice_marc {
                 array_push ($retour, $elem);
             }
         }
+        return ($retour);
     }
     
     function formate_chaine ($chaine, $avant, $avant_verif, $apres, $concat="") {
