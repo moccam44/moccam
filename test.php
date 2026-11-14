@@ -31,9 +31,24 @@ try {
     }
      * 
      */
-    $notice_str=$marc->get_notice_from_file(5);
-    $notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
-    print_r($notice_array);
+    
+    $limite=5;
+    foreach ($marc->repertoire_notices as $idx => $infos) {
+        $notice_str=$marc->get_notice_from_file(5);
+        $notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
+        print_r($notice_array);
+        $notice=new notice($notice_array);
+        $notice->get_infos();
+        
+        if ($idx >= $limite) {
+            die ("limite $limite atteinte");
+        }
+        
+        
+    }
+    //$notice_str=$marc->get_notice_from_file(5);
+    //$notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
+    //print_r($notice_array);
     //$notice=new notice_marc($notice_array);
     
     //print ("\n<br>titre : ".$notice->get("200", "a"));
@@ -42,8 +57,8 @@ try {
     
     //$titre=$notice->get_ss_champ($champ_200, "a");
     //print_r($titre);
-    $notice=new notice($notice_array);
-    $notice->get_infos();
+    //$notice=new notice($notice_array);
+    //$notice->get_infos();
     
 
     
