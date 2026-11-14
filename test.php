@@ -34,7 +34,7 @@ try {
     
     $limite=5;
     foreach ($marc->repertoire_notices as $idx => $infos) {
-        $notice_str=$marc->get_notice_from_file(5);
+        $notice_str=$marc->get_notice_from_file($idx);
         $notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
         print_r($notice_array);
         $notice=new notice($notice_array);
