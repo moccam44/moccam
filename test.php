@@ -10,6 +10,7 @@ include_once ("php/classes/notice_marc.php");
 include_once ("php/classes/notice.php");
 
 include_once ("php/fonctions/listes.php");
+include_once ("php/fonctions/util.php");
 
 print ("debut <br> \n");
 // initialisation de iso5426

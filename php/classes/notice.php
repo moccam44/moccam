@@ -15,6 +15,11 @@ class notice extends notice_marc {
         $this->infos["auteurs_affichage"]=$this->get_auteurs("complet");
         $this->infos["auteur"]=$this->get_auteur("simple");
         $this->infos["auteur_affichage"]=$this->get_auteur("complet");
+        $infos_editeur=$this->get_infos_editeur();
+        $this->info["nom_editeur"]=$infos_editeur["nom"];
+        $this->info["lieu_editeur"]=$infos_editeur["lieu"];
+        $this->info["date_editeur"]=$infos_editeur["date"];
+        $this->infos["titre"]=$this->get_EAN();
         
         
         print_r($this->infos);
@@ -79,6 +84,37 @@ class notice extends notice_marc {
                 return ($this->infos["auteurs"][0]);
             }
         }
+    }
+    
+    function get_infos_editeur () {
+        $retour=array();
+        
+        // tentative avec le champ 214 ayant id2==0
+        $champs_214=$this->get_champs("214");
+        foreach ($champs_214 as $champ_214) {
+            if ($champ_214["id2"]=="0") {
+                $retour["editeur"]=$this->get_ss_champ($champ_214,"c");
+                $retour["lieu"]=$this->get_ss_champ($champ_214,"a");
+                $retour["date"]=$this->get_ss_champ($champ_214,"d");
+                return ($retour);
+            }
+        }
+        
+        // si pas trouvé, tentative avec champ 210
+        $champ_210=$this->get_champ("210");
+        $retour["editeur"]=$this->get_ss_champ($champ_210,"c");
+        $retour["lieu"]=$this->get_ss_champ($champ_210,"a");
+        $retour["date"]=$this->get_ss_champ($champ_210,"d");
+        
+        return ($retour);
+    }
+    
+    function get_EAN () {
+        $elem=$this->get("010", "a");
+        if ($elem == "") {
+            $elem=$this->get("073", "a");
+        }
+        return(traite_EAN($elem));
     }
     
     
