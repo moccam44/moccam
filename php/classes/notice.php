@@ -20,6 +20,8 @@ class notice extends notice_marc {
         $this->infos["lieu_editeur"]=$infos_editeur["lieu"];
         $this->infos["date_editeur"]=$infos_editeur["date"];
         $this->infos["EAN"]=$this->get_EAN();
+        $this->infos["resume"]=$this->get_resume();
+        $this->infos["sujets"]=$this->get_sujets();
         
         
         print_r($this->infos);
@@ -115,6 +117,28 @@ class notice extends notice_marc {
             $elem=$this->get("073", "a");
         }
         return(traite_EAN($elem));
+    }
+    
+    function get_resume () {
+        return ($this->get("330", "a"));
+    }
+    
+    function get_sujets () {
+        $retour=array();
+        $champs_600=$this->get_champs(array("600", "601", "602", "604", "605", "606", "607", "608", "610", "615", "616", "620", "626"));
+        foreach ($champs_600 as $champ_600) { // pour chaque champ
+            $chaine="";
+            foreach ($champ_600["sous_champs"] as $ss_champ) {
+                
+                $code=$ss_champ["code"];
+                $valeur=$ss_champ["valeur"];
+                if (!is_numeric($code)) {
+                    $chaine.=$this->formate_chaine($valeur, "", ". ","", $chaine);
+                }
+            } // fin du pour chaque sous-champ
+            array_push($retour, $chaine);
+        } // fin du pour chaque champ
+        return ($retour);
     }
     
     
