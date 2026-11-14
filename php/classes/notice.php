@@ -16,9 +16,9 @@ class notice extends notice_marc {
         $this->infos["auteur"]=$this->get_auteur("simple");
         $this->infos["auteur_affichage"]=$this->get_auteur("complet");
         $infos_editeur=$this->get_infos_editeur();
-        $this->info["nom_editeur"]=$infos_editeur["nom"];
-        $this->info["lieu_editeur"]=$infos_editeur["lieu"];
-        $this->info["date_editeur"]=$infos_editeur["date"];
+        $this->infos["nom_editeur"]=$infos_editeur["nom"];
+        $this->infos["lieu_editeur"]=$infos_editeur["lieu"];
+        $this->infos["date_editeur"]=$infos_editeur["date"];
         $this->infos["titre"]=$this->get_EAN();
         
         
