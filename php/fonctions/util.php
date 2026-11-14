@@ -1,7 +1,6 @@
 <?php
 
 function traite_EAN ($chaine) {
-    print ("get_EAN($chaine)");
     $clef="";
     $chaine=trim($chaine);
     $chaine=str_replace ("-","",$chaine);
@@ -14,24 +13,24 @@ function traite_EAN ($chaine) {
         $chaine="978".$chaine;
         $clef=get_clef_ean($chaine);
         $chaine.=$clef;
-        //return($chaine);
+        return($chaine);
     } elseif (strlen($chaine)==9) { // ISBN sans clef de controle
         $chaine="978".$chaine;
         $clef=get_clef_ean($chaine);
         $chaine.=$clef;
-        //return($chaine);
+        return($chaine);
     } elseif (strlen($chaine)==13) {  // Code barres commercial
             if (preg_match ("/[^0-9]/i",$chaine)) {
                 return("");
             }
-            //return($chaine);
+            return($chaine);
     } elseif (strlen($chaine)==12) {  // Code barres commercial sans clef de controle
             if (preg_match ("/[^0-9]/i",$chaine)) {
                 return("");
             }
             $clef=get_clef_ean($chaine);
             $chaine.=$clef;
-            //return($chaine);
+            return($chaine);
     } else { // ISBN erronné
         return("");
     }
