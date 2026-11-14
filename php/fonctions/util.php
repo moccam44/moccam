@@ -1,6 +1,7 @@
 <?php
 
 function traite_EAN ($chaine) {
+    print ("get_EAN($chaine)");
     $clef="";
     $chaine=trim($chaine);
     $chaine=str_replace ("-","",$chaine);
