@@ -22,8 +22,25 @@ $bool_affiche_notice=$_REQUEST["bool_affiche_notice"];
 
 print ("debut <br> \n");
 
+if ($_REQUEST["q"] != "") {
+    print ("requete : ".$request["q"]);
+    $notice_db=new notice_db();
+    $criteres=array();
+    $criteres[]=array("type"=>"embedding", "valeur"=>$_REQUEST["q"]);
+    $tris=array();
+    $tris[]=array("type"=>"embedding", "valeur"=>$_REQUEST["q"]);
+    $requete=array("criteres"=>$criteres, "tris"=>$tris, "limite"=>10);
+    $resultat=$notice_db->get($requete);
+    print_r($resultat);
+    
+}
+
+
 //init_db();
 //die("");
+//
+
+/**
 // initialisation de iso5426
 $iso5426=new iso5426();
 $iso5426->init();
@@ -33,15 +50,14 @@ try {
     print ("ouverture de /var/marc/panier.pan <br>\n");
     $marc->setup_file("/var/marc/panier.pan");
 
-    /**
-    foreach ($marc->repertoire_notices as $idx => $infos) {
-        $chaine=$marc->get_notice_from_file($idx);
-        $tableau=$marc->notice_marc_2_array(array("notice"=>$chaine));
-        print ("<br> <b> NOTICE $idx </b></br> \n");
-        print_r($tableau);
-    }
-     * 
-     */
+    
+    //foreach ($marc->repertoire_notices as $idx => $infos) {
+        //$chaine=$marc->get_notice_from_file($idx);
+        //$tableau=$marc->notice_marc_2_array(array("notice"=>$chaine));
+        //print ("<br> <b> NOTICE $idx </b></br> \n");
+        //print_r($tableau);
+    //}
+     
     
     $limite=5000;
     foreach ($marc->repertoire_notices as $idx => $infos) {
@@ -83,9 +99,29 @@ try {
 } catch (Exception $e) {
     print($e->getMessage());
 }
-
+**/
 
 print ("fin <br> \n");
 
 
 ?>
+
+<HTML>
+    <HEAD>
+        <title>
+            Test new moccam
+        </title>
+    </HEAD>
+    <BODY>
+        <FORM action="test.php">
+            <TEXTAREA name="q">Partir en voyage dans un pays d'Amérique du sud</TEXTAREA>
+            <BUTTON type="submit" >OK</BUTTON>
+                
+                
+                
+        </FORM>
+        
+    </BODY>
+       
+    
+</HTML>
