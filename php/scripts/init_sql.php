@@ -11,7 +11,7 @@ function init_db () {
     $sqls=array();
     $sqls[]="DROP TABLE IF EXISTS notices";
     $sqls[]="CREATE TABLE notices ("
-            . "ID int PRIMARY KEY "
+            . "ID int AUTO_INCREMENT PRIMARY KEY "
             . ", EAN VARCHAR (20) UNIQUE"
             . ", titre VARCHAR (255) "
             . ", titres TEXT "
@@ -36,6 +36,7 @@ function init_db () {
             . ", date_import DATE "
             . ", date_modif DATE "
             . ", date_embedding DATE "
+            . ", cpt_download INT "
             . " ) "
             . "DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci";
     $sqls[]="ALTER TABLE notices"
@@ -48,6 +49,7 @@ function init_db () {
             .", ADD INDEX date (date) "
             .", ADD INDEX type_doc (type_doc) "
             .", ADD INDEX public (public) "
+            .", ADD INDEX cpt_download (cpt_download) "
             .", ADD INDEX date_importe (date_import) "
             .", ADD INDEX date_modif (date_modif) "
             .", ADD INDEX date_embedding (date_embedding) "

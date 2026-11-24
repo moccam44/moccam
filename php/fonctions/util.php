@@ -76,6 +76,31 @@ function get_clef_ean($chaine) {
     }
 }
 
+/**
+ * 
+ * @param string $chaine
+ * @return int
+ * extrait l'année d'une chaine de caractères et vérifie qu'elle a bien le format année (4 chiffres compris entre 1900 et l'année n+1)
+ */
+function date_str_2_int ($chaine) {
+    $chiffres = preg_replace('/[^0-9]/', '', $chaine);
+    if (strlen($chiffres) === 8) { // si date précise du type 01/01/2000 => 8 caractères
+        $chiffres = substr ($chiffres, 3, 4);
+    }
+    if (strlen($chiffres === 4)) {
+        $annee=(int)$chiffres;
+        $anne_en_cours=(int)date("Y");
+        if ($annee < 1900 OR $annee > $anne_en_cours+1) {
+            return (0);
+        } else {
+            return ($annee);
+        }
+    } else {
+        return (0);
+    }
+    
+}
+
 
 
 ?>

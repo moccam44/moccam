@@ -2,6 +2,7 @@
 
 class notice extends notice_marc {
     var $infos=array();
+    // var $notice est hérité de notice_marc
     
 
     public function __construct($notice) {
@@ -20,6 +21,7 @@ class notice extends notice_marc {
         $this->infos["nom_editeur"]=$infos_editeur["editeur"];
         $this->infos["lieu_editeur"]=$infos_editeur["lieu"];
         $this->infos["date_editeur"]=$infos_editeur["date"];
+        $this->infos["date_editeur_int"]=date_str_2_int($this->infos["date_editeur"]);
         $this->infos["EAN"]=$this->get_EAN();
         $this->infos["resume"]=$this->get_resume();
         $this->infos["sujets"]=$this->get_sujets();
@@ -35,6 +37,8 @@ class notice extends notice_marc {
         $this->infos["type_doc"]=$infos_label["type_doc"];
         $this->infos["niveau_biblio"]=$infos_label["niveau_biblio"];
         $this->infos["niveau_hierarchique"]=$infos_label["niveau_hierarchique"];
+        $this->infos["origine"]="inconnu";
+        $this->infos["qualite"]=1;
 
         $this->infos["tousmots"]=$this->get_tous_mots($this->infos);
         $str_embedding=$this->get_str_embedding($this->infos);
@@ -45,10 +49,12 @@ class notice extends notice_marc {
             $this->infos["embedding"]="";
             $this->infos["date_embedding"]="0000-00-00";
             print($e->getMessage());
-        }   
+        } 
+        $this->infos["json"]=json_encode($this->notice);
  
         
-        print_r($this->infos);
+        //print_r($this->infos);
+        return ($this->infos);
     }
     
     function get_titre () {

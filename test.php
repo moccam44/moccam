@@ -10,9 +10,11 @@ include_once ("php/classes/iso5426.php");
 include_once ("php/classes/notice_marc.php");
 include_once ("php/classes/notice.php");
 include_once ("php/classes/embedding.php");
+include_once ("php/classes/notice_db.php");
 
 include_once ("php/fonctions/listes.php");
 include_once ("php/fonctions/util.php");
+include_once ("php/fonctions/sql_util.php");
 
 include_once("php/scripts/init_sql.php");
 
@@ -20,8 +22,8 @@ $bool_affiche_notice=$_REQUEST["bool_affiche_notice"];
 
 print ("debut <br> \n");
 
-init_db();
-die("");
+//init_db();
+//die("");
 // initialisation de iso5426
 $iso5426=new iso5426();
 $iso5426->init();
@@ -41,7 +43,7 @@ try {
      * 
      */
     
-    $limite=5;
+    $limite=5000;
     foreach ($marc->repertoire_notices as $idx => $infos) {
         $notice_str=$marc->get_notice_from_file($idx);
         $notice_array=$marc->notice_marc_2_array(array("notice"=>$notice_str));
@@ -50,7 +52,10 @@ try {
         }
 
         $notice=new notice($notice_array);
-        $notice->get_infos();
+        $infos=$notice->get_infos();
+        
+        $notice_db=new notice_db();
+        $notice_db->add($infos);
         
         if ($idx >= $limite) {
             die ("limite $limite atteinte");
