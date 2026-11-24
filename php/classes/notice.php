@@ -9,6 +9,7 @@ class notice extends notice_marc {
     }
     
     function get_infos () {
+        $this->infos=array(); // raz
         $this->infos["titre"]=$this->get_titre();
         $this->infos["titres"]=$this->get_titres();
         $this->infos["auteurs"]=$this->get_auteurs("simple");
@@ -22,7 +23,30 @@ class notice extends notice_marc {
         $this->infos["EAN"]=$this->get_EAN();
         $this->infos["resume"]=$this->get_resume();
         $this->infos["sujets"]=$this->get_sujets();
-        
+        $this->infos["collection"]=$this->get_collection();
+        $infos_collation=$this->get_infos_collation();
+        $this->infos["pagnation"]=$infos_collation["pagination"];
+        $this->infos["format"]=$infos_collation["format"];
+        $this->infos["deweys"]=$this->get_deweys();
+        $infos_langue=$this->get_infos_langue();
+        $this->infos["langue_texte"]=$infos_langue["langue_texte"];
+        $this->infos["langue_origine"]=$infos_langue["langue_origine"];
+        $infos_label=$this->get_infos_label();
+        $this->infos["type_doc"]=$infos_label["type_doc"];
+        $this->infos["niveau_biblio"]=$infos_label["niveau_biblio"];
+        $this->infos["niveau_hierarchique"]=$infos_label["niveau_hierarchique"];
+
+        $this->infos["tousmots"]=$this->get_tous_mots($this->infos);
+        $str_embedding=$this->get_str_embedding($this->infos);
+        try {
+            $this->infos["embedding"]=$this->get_embedding($str_embedding);
+            $this->infos["date_embedding"]=date("Y-m-d");
+        } catch (Exception $e) {
+            $this->infos["embedding"]="";
+            $this->infos["date_embedding"]="0000-00-00";
+            print($e->getMessage());
+        }   
+ 
         
         print_r($this->infos);
     }
@@ -33,13 +57,9 @@ class notice extends notice_marc {
     
     function get_titres () {
         $champ_200=$this->get_champ("200");
-        print_r($champ_200);
         $ss_champs_200=$this->get_ss_champs($champ_200, array("a", "c", "d", "e", "i"));
-        print_r($ss_champs_200);
         $champs_400=$this->get_champs(array("430", "431", "432", "433", "434", "435", "436", "437", "440", "441", "442", "443", "444", "445", "446", "447", "448", "453", "454", "461", "462", "463", "464"));
-        print_r($champs_400);
         $ss_champs_400=$this->get_ss_champs($champs_400, "t");
-        print_r($ss_champs_400);
         $retour=array_merge ($ss_champs_200, $ss_champs_400);
         return ($this->nettoie_liste($retour));
         
@@ -138,6 +158,101 @@ class notice extends notice_marc {
             } // fin du pour chaque sous-champ
             array_push($retour, $chaine);
         } // fin du pour chaque champ
+        return ($retour);
+    }
+    
+    function get_collection () {
+        $collection_410=$this->get("410", "t");
+        if ($collection_410 !== "") {
+            return ($collection_410);
+        } else {
+            return ($this->get("225", "a"));
+        }
+    }
+    
+    function get_infos_collation () {
+        $retour=array();
+        $champ_215=$this->get_champ("215");
+        $retour["pagination"]=$this->get_ss_champ($champ_215, "a");
+        $retour["format"]=$this->get_ss_champ($champ_215, "d");
+        return ($retour);
+    }
+    
+    function get_deweys () {
+        $retour=array();
+        $champs_676=$this->get_champs("676");
+        foreach ($champs_676 as $champ_676) {
+            array_push($retour, $this->get_ss_champ($champ_676, "a"));
+        }
+        return($this->nettoie_liste($retour));
+    }
+    
+    function get_infos_langue () {
+        $retour=array();
+        $champ_101=$this->get_champ("101");
+        $code_langue_texte=strtolower($this->get_ss_champ($champ_101, "a"));
+        $code_langue_origine=strtolower($this->get_ss_champ($champ_101, "c"));
+        $retour["langue_texte"]=get_intitule_liste_by_code("langue",$code_langue_texte, $code_langue_texte);
+        $retour["langue_origine"]=get_intitule_liste_by_code("langue",$code_langue_origine, $code_langue_origine);
+
+        return ($retour);
+    }
+    
+    function get_infos_label () {
+        $retour=array();
+        $retour["type_doc"]=substr($this->notice["label"], 6, 1);
+        $retour["niveau_biblio"]=substr($this->notice["label"], 7, 1);
+        $retour["niveau_hierarchique"]=substr($this->notice["label"], 8, 1);
+        return ($retour);
+    }
+    
+    function get_str_embedding ($infos) {
+        $retour="";
+        $intro="Le titre du livre est : ";
+        if ($infos["type_doc"] === "g") {
+            $intro="Le titre de la vidéo est : ";
+        } elseif ($infos["type_doc"] === "i" OR $infos["type_doc"] === "j") {
+            $intro="Le titre du CD est : ";
+        }
+        
+        $retour.=$intro;
+        $retour.=implode(". ", $infos["titres"]).". ";
+        
+        if (count($infos["sujets"]) > 0) {
+            $retour.="Les sujets abordés sont les suivants : ";
+            $retour.=implode(". ", $infos["sujets"]).". ";
+        } 
+        
+        if ($infos["resume"] != "") {
+            $retour.="Le résumé est le suivant : ".$infos["resume"];
+        }
+        
+        return ($retour);     
+    }
+    
+    function get_embedding ($chaine) {
+        $embedding=new embedding();
+        return ($embedding->getEmbedding($chaine));
+    }
+    
+    function get_tous_mots ($infos) {
+        print_r($infos);
+        $retour="";
+        $retour.=implode(" | ", $infos["titres"])." | ";
+        if (count($infos["sujets"]) > 0) {
+            $retour.=implode(" | ", $infos["sujets"]);
+            $retour.=" | ";
+        }
+        if (count($infos["auteurs"]) > 0) {
+            $retour.=implode(" | ", $infos["auteurs"]);
+            $retour.=" | ";
+        }
+        if ($infos["editeur"] != "") {
+            $retour.=$infos["editeur"]." | ";
+        }
+        if ($infos["resume"] != "") {
+            $retour.=$infos["resume"]." | ";
+        }
         return ($retour);
     }
     
